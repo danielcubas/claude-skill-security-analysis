@@ -37,6 +37,7 @@ Perform a comprehensive security audit identifying:
 11. Infrastructure misconfiguration
 12. Supply chain risks
 13. Compliance risks (privacy laws if applicable)
+14. File upload & storage risks
 
 Prioritize findings by:
 
@@ -68,6 +69,8 @@ Identify:
 - Client-exposed variables
 - Environment exposure
 - Internal tools accidentally public
+- OpenAPI/Swagger/GraphQL playground exposed in production
+- Source maps (.map files) exposing original source code
 
 Explain how an attacker would enumerate and probe these surfaces.
 
@@ -85,6 +88,13 @@ Evaluate:
 - MFA presence
 - Password policy strength
 - Logout invalidation behavior
+- Account enumeration (different responses for invalid email vs wrong password)
+- Password reset poisoning (host header injection in reset emails)
+
+If OAuth/OIDC is used:
+- open redirects in callback URLs
+- missing or weak state parameter
+- token leaking via referrer header
 
 If JWT is used:
 - evaluate signing algorithm
@@ -108,6 +118,8 @@ Evaluate:
 - Missing backend validation
 - Privilege escalation paths
 - Broken object-level authorization (BOLA)
+- Broken function-level authorization (BFLA) — access to admin functions by regular users
+- Internal IDs leaked in API responses enabling pivoting to other resources
 
 Explain concrete exploit scenarios.
 
@@ -124,6 +136,7 @@ Framework-agnostic evaluation:
 - Missing row-level isolation
 - Migration safety
 - Connection exhaustion
+- N+1 query abuse (endpoints allowing client-controlled nested data loading can be weaponized for database exhaustion)
 - Transaction safety
 - Race conditions
 
@@ -148,6 +161,9 @@ Check for:
 - CSRF
 - SSRF
 - Path traversal
+- Prototype pollution (Node.js/JavaScript environments)
+- HTTP header injection (CRLF injection, host header attacks)
+- Open redirect (user-controlled redirects after login/actions)
 
 Describe likely injection points in modern web apps.
 
@@ -178,6 +194,10 @@ Check:
 - Abuse prevention
 - Request size limits
 - Timeout configuration
+- Query complexity limits (GraphQL depth/complexity limits, REST nested include restrictions)
+- CORS misconfiguration (wildcard origins, credentialed requests with reflected origin)
+- Verbose error responses in production (stack traces, query details, internal paths)
+- Missing HTTP security headers (CSP, HSTS, X-Frame-Options, Referrer-Policy)
 
 ---
 
@@ -190,6 +210,8 @@ If payments exist:
 - Fraud vectors
 - Idempotency usage
 - Logging of financial data
+- Price/quantity tampering (client-side manipulation before checkout)
+- Coupon/promo code abuse (repeated application, race conditions on redemption)
 
 If external APIs exist:
 
@@ -237,6 +259,7 @@ Check:
 - TLS configuration
 - Backup encryption
 - Cloud IAM permissions
+- Exposed admin panels without IP restriction (/admin, /dashboard)
 
 ---
 
@@ -264,6 +287,20 @@ If handling personal or medical data:
 - Data anonymization
 - Privacy by design
 - Cross-tenant exposure risk
+
+---
+
+## 1️⃣4️⃣ File Upload & Storage
+
+If file uploads exist:
+
+- Unrestricted file types (upload of .html, .svg with embedded XSS, executables)
+- Path traversal via filename
+- Missing content-type validation (MIME vs extension mismatch)
+- Storage ACL misconfiguration (public S3 buckets, open GCS)
+- Malware in uploaded files
+- File size abuse (DoS via massive uploads)
+- Direct access to uploaded files bypassing auth
 
 ---
 
