@@ -10,23 +10,24 @@ It's designed to be run **before production deployment** or **after MVP completi
 
 ## Audit Coverage
 
-The skill performs a structured audit across **13 security domains**:
+The skill performs a structured audit across **14 security domains**:
 
 | # | Domain | What It Checks |
 |---|--------|----------------|
-| 1 | **Attack Surface Mapping** | Public endpoints, API routes, webhooks, exposed env vars, internal tools |
-| 2 | **Authentication Security** | Token/session handling, JWT config, brute force protection, MFA, logout |
-| 3 | **Authorization & Access Control** | RBAC, BOLA, tenant isolation, privilege escalation, ID enumeration |
-| 4 | **Database & ORM Layer** | SQL injection, mass assignment, race conditions, row-level isolation |
-| 5 | **Injection & Input Handling** | XSS, CSRF, SSRF, command injection, path traversal, template injection |
+| 1 | **Attack Surface Mapping** | Public endpoints, API routes, webhooks, exposed env vars, internal tools, OpenAPI/Swagger/GraphQL playground exposure, source maps |
+| 2 | **Authentication Security** | Token/session handling, JWT config, brute force protection, MFA, logout, account enumeration, password reset poisoning, OAuth/OIDC misconfigs |
+| 3 | **Authorization & Access Control** | RBAC, BOLA, BFLA, tenant isolation, privilege escalation, ID enumeration, leaked internal IDs |
+| 4 | **Database & ORM Layer** | SQL injection, mass assignment, race conditions, row-level isolation, N+1 query abuse, connection exhaustion |
+| 5 | **Injection & Input Handling** | XSS, CSRF, SSRF, command injection, path traversal, template injection, prototype pollution, HTTP header injection, open redirects |
 | 6 | **Secrets & Cryptography** | Hardcoded creds, weak hashing, secret rotation, insecure randomness |
-| 7 | **API Hardening** | Rate limiting, DDoS resilience, bot mitigation, request size limits |
-| 8 | **Payments & Integrations** | Webhook validation, replay protection, API key exposure, fraud vectors |
+| 7 | **API Hardening** | Rate limiting, DDoS resilience, bot mitigation, request size limits, CORS misconfiguration, query complexity limits, HTTP security headers, verbose errors |
+| 8 | **Payments & Integrations** | Webhook validation, replay protection, API key exposure, fraud vectors, price/quantity tampering, coupon abuse |
 | 9 | **Cache & Queue Systems** | Cache poisoning, replay risks, queue abuse, tenant namespace isolation |
 | 10 | **Logging & Monitoring** | Sensitive data in logs, audit trails, incident detection capability |
-| 11 | **DevOps & Infrastructure** | CI/CD secrets, Docker config, TLS, cloud IAM, git history leaks |
+| 11 | **DevOps & Infrastructure** | CI/CD secrets, Docker config, TLS, cloud IAM, git history leaks, exposed admin panels |
 | 12 | **Supply Chain Security** | Outdated deps, known CVEs, lockfile integrity, SBOM availability |
 | 13 | **Privacy & Compliance** | Data minimization, right to erasure, consent tracking, retention policy |
+| 14 | **File Upload & Storage** | Unrestricted file types, path traversal via filename, MIME validation, storage ACL misconfiguration, malware, file size abuse |
 
 ## Key Design Principles
 
@@ -79,7 +80,7 @@ Claude will scan your codebase and produce a structured security audit report.
 
 1. You run `/security-analysis` inside your project directory
 2. Claude reads your codebase — routes, models, configs, environment files, dependencies, etc.
-3. Each of the 13 audit domains is evaluated against what actually exists in your project
+3. Each of the 14 audit domains is evaluated against what actually exists in your project
 4. Domains that don't apply (e.g., no payments, no queue system) are automatically skipped
 5. A structured report is generated with prioritized findings and a go-live checklist
 
