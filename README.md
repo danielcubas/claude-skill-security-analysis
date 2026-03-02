@@ -53,7 +53,7 @@ Findings are prioritized as **CRITICAL**, **HIGH**, or **MEDIUM**, and the audit
 ### Option 1: Clone into Claude Code skills directory
 
 ```bash
-git clone https://github.com/danielbom/claude-skill-security-analysis.git \
+git clone https://github.com/danielcubas/claude-skill-security-analysis.git \
   ~/.claude/skills/security-analysis
 ```
 
