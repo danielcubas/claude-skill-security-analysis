@@ -75,6 +75,28 @@ Inside any project directory with Claude Code running:
 
 Claude will scan your codebase and produce a structured security audit report.
 
+## How It Works
+
+1. You run `/security-analysis` inside your project directory
+2. Claude reads your codebase — routes, models, configs, environment files, dependencies, etc.
+3. Each of the 13 audit domains is evaluated against what actually exists in your project
+4. Domains that don't apply (e.g., no payments, no queue system) are automatically skipped
+5. A structured report is generated with prioritized findings and a go-live checklist
+
+## Limitations
+
+- **Static analysis only** — This skill analyzes source code and configuration. It does not perform dynamic testing (DAST), runtime fuzzing, or network-level scanning.
+- **Not a replacement for professional pentesting** — Use this as a complement to, not a substitute for, dedicated SAST/DAST tools and manual penetration testing.
+- **Scope depends on file access** — The quality of the audit depends on which files Claude can read in your project. Ensure relevant source files are accessible.
+
+## Language Support
+
+This skill is framework-agnostic and works with any language or stack, including but not limited to:
+
+TypeScript/JavaScript, Python, Go, Ruby, PHP, Java, Kotlin, Swift, Rust, C#
+
+It adapts to whatever frameworks, ORMs, and libraries your project uses.
+
 ## Example Use Cases
 
 - Pre-launch security review for a SaaS MVP
@@ -85,6 +107,14 @@ Claude will scan your codebase and produce a structured security audit report.
 ## Requirements
 
 - [Claude Code CLI](https://docs.anthropic.com/en/docs/claude-code) installed and configured
+
+## Contributing
+
+Contributions are welcome! Feel free to:
+
+- Open an [issue](https://github.com/danielcubas/claude-skill-security-analysis/issues) to report bugs or suggest new audit domains
+- Submit a pull request with improvements to `SKILL.md` or `README.md`
+- Share feedback on false positives or missing coverage areas
 
 ## License
 

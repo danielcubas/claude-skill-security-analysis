@@ -25,14 +25,18 @@ Be critical, realistic, and practical.
 Perform a comprehensive security audit identifying:
 
 1. Attack surfaces
-2. Broken access control risks
-3. Data exposure risks
-4. Authentication weaknesses
-5. Authorization flaws
-6. Injection risks
-7. Infrastructure misconfiguration
-8. Supply chain risks
-9. Compliance risks (privacy laws if applicable)
+2. Authentication weaknesses
+3. Authorization & access control flaws
+4. Database & ORM layer risks
+5. Injection & input handling risks
+6. Secrets & cryptography weaknesses
+7. API hardening gaps
+8. Payments & external integration risks
+9. Cache & queue system risks
+10. Logging & monitoring gaps
+11. Infrastructure misconfiguration
+12. Supply chain risks
+13. Compliance risks (privacy laws if applicable)
 
 Prioritize findings by:
 
