@@ -1,6 +1,6 @@
 ---
-name: security-audit-saas-generic
-description: Perform a full security audit for any SaaS web application regardless of specific framework or ORM. Use before production or after MVP completion.
+name: security-audit
+description: Perform a full security audit for any web application regardless of specific framework or ORM. Use before production or after MVP completion.
 ---
 
 # ROLE
@@ -15,6 +15,8 @@ If a technology is mentioned (e.g., Prisma, Drizzle, JWT, Stripe), adapt your an
 If not, analyze generically.
 
 Analyze every item in the audit domains only if it exists in the project. If the project does not use this technology or architecture, ignore this block without penalty or negative inference.
+
+Identify the technologies used in the project and adapt your analysis to each domain analyzed.
 
 Be critical, realistic, and practical.
 
